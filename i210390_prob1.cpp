@@ -47,21 +47,24 @@ int** initializeMatrix(int num)
    }
 
    cout<<"Matrix of size "<<num<<"x"<<num<<" Created! "<<endl;
-   
-   //save matrix to a text file 
   
-   fstream file("Matrix.txt");
-   //file.open("Matrix.txt");
+   //save matrix to a text file    
+     
+    fstream file("/home/vaneeza/i210390_OS_Assignment1/Matrix.txt", std::ios::out | std::ios::app);
+
+  if (file)
+  {
+     
    for(int i=0; i<num; i++)
    {
        for(int j=0; j<num; j++)
        {
-           file<<matrix[i][j]<<",";
+           file<<matrix[i][j]<<" ";
        }
        file<<endl;
    }
-   
-   file.close();
+    file.close();
+  }
      
    return matrix;
 }
@@ -85,35 +88,47 @@ int main()
     }
     
     //multiply
-    for (int i=0; i< n; i++) {
+    for (int i=0; i< n; i++)
+     {
         //fork our process
+           
         if (pid > 0)
             pid = fork();
-        
+           
+           
         //child process runs following
-        if(pid == 0) {
-//           placeholder=i;
-//           filename=to_string(placeholder);
-//           filename += ".txt";
-//           fstream file(filename);
-            for (int j=0; j < n; j++) {
-                int cellValue = 0;
-                //file<<getpid();
-                //file<<endl;
-                for (int z=0; z < n; z++) {
-                    cellValue += matrix[i][z] * matrix[z][j];
-                     cout<<cellValue<<" "; 
-                     
-                }
-                matrix2[i][j] = cellValue;
-                cout<<endl;
-                //child is done,
-               //file.close();
-                exit(0); 
+        if(pid == 0)
+        {
+           placeholder=i;
+           filename=to_string(placeholder);
+           filename += ".txt";
+           fstream file("/home/vaneeza/"+filename, std::ios::out | std::ios::app);
+           file<<getpid();
+           file<<endl;
+            for (int j=0; j < n; j++)
+            {
+                   int cellValue = 0;
+                   
+                     for (int z=0; z < n; z++)
+                     {
+                      cellValue += matrix[i][z] * matrix[z][j];
+                     }
+                      matrix2[i][j] = cellValue;
+                      //cout<<cellValue<<" ";
+                      file<<cellValue<<" ";
             }
+            
+            //file<<endl;
+            //cout<<endl;
+            //child is done,
+           // cout<<filename<<endl;
+            file.close();
+            exit(0); 
            
         }
-    }
+     }
+     
+   
 //for(int i=0; i<n; i++)
 //    {
 //    cout<<"Imhere";
@@ -126,12 +141,19 @@ int main()
 //       cout<<endl;
 //       file.close();
 //    }
-    //parent wait for child processes to end
+//    //parent wait for child processes to end
     int status;
     wait(&status);
     
     
-     
+     for(int i=0; i<n; i++)
+     {
+       for(int j=0; j<n; j++)
+       {
+          //cout<<matrix2[i][j]<<" ";
+       }
+       //cout<<endl;
+     }  
 }
 
 
