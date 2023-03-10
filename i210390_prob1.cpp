@@ -79,7 +79,7 @@ int main()
     int** matrix = initializeMatrix(n);   
     string filename;
     int id, placeholder;
-    char ch;
+    string ch;
     
     int** matrix2= new int*[n];
     for(int i=0; i<n; i++)
@@ -93,8 +93,24 @@ int main()
         //fork our process
            
         if (pid > 0)
-            pid = fork();
-           
+          {  pid = fork();
+            int status;
+            wait(&status);
+            //cout<<"Imhere";
+            filename=to_string(i);
+            filename +=".txt";
+            ifstream file("/home/vaneeza/i210390_OS_Assignment1/"+filename, std::ios::in);
+            while(file>>ch)
+            {
+              getline(file,ch);
+              file>>ch;
+              cout<<ch;
+              
+            }
+            cout<<endl;
+            file.close();
+            
+    }
            
         //child process runs following
         if(pid == 0)
@@ -102,7 +118,7 @@ int main()
            placeholder=i;
            filename=to_string(placeholder);
            filename += ".txt";
-           fstream file("/home/vaneeza/"+filename, std::ios::out | std::ios::app);
+           fstream file("/home/vaneeza/i210390_OS_Assignment1/"+filename, std::ios::out | std::ios::app);
            file<<getpid();
            file<<endl;
             for (int j=0; j < n; j++)
@@ -114,38 +130,34 @@ int main()
                       cellValue += matrix[i][z] * matrix[z][j];
                      }
                       matrix2[i][j] = cellValue;
-                      //cout<<cellValue<<" ";
                       file<<cellValue<<" ";
             }
-            
-            //file<<endl;
-            //cout<<endl;
+           
             //child is done,
-           // cout<<filename<<endl;
             file.close();
             exit(0); 
            
         }
      }
      
+
+     //parent wait for child processes to end
+    
+
    
 //for(int i=0; i<n; i++)
 //    {
-//    cout<<"Imhere";
+//       cout<<"Imhere";
 //       filename=to_string(i);
-//       ifstream file(filename);
+//       filename +=".txt";
+//       ifstream file("/home/vaneeza/i210390_OS_Assignment1/"+filename, std::ios::in);
 //       while(file>>ch)
 //       {
 //          cout<<ch;
 //       }
 //       cout<<endl;
 //       file.close();
-//    }
-//    //parent wait for child processes to end
-    int status;
-    wait(&status);
-    
-    
+//    }    
      for(int i=0; i<n; i++)
      {
        for(int j=0; j<n; j++)
