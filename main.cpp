@@ -140,34 +140,4 @@ int main()
         }
      }
      
-
      //parent wait for child processes to end
-    
-
-   
-//for(int i=0; i<n; i++)
-//    {
-//       cout<<"Imhere";
-//       filename=to_string(i);
-//       filename +=".txt";
-//       ifstream file("/home/vaneeza/i210390_OS_Assignment1/"+filename, std::ios::in);
-//       while(file>>ch)
-//       {
-//          cout<<ch;
-//       }
-//       cout<<endl;
-//       file.close();
-//    }    
-     for(int i=0; i<n; i++)
-     {
-       for(int j=0; j<n; j++)
-       {
-          //cout<<matrix2[i][j]<<" ";
-       }
-       //cout<<endl;
-     }  
-}
-
-
-
-
